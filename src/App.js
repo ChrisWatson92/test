@@ -17,7 +17,11 @@ export default class App extends Component {
   
 
   componentDidMount() {
-    axios.get('https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1')
+    
+  }
+
+  performSearch = (query) => {
+    axios.get(`https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1&tags=${query}`)
     .then(response => {
       this.setState({
         flickrs: response.data.items
@@ -27,6 +31,7 @@ export default class App extends Component {
       console.log('Error fetching and parsing data', error);
     });
   }
+
   render() {
     console.log(this.state.flickrs);
     return (
@@ -35,7 +40,7 @@ export default class App extends Component {
           <Grid>
             <h1>Search App</h1>
             <p>This is a simple search app</p>
-            <SearchForm />
+            <SearchForm onSearch={this.performSearch}/>
           </Grid>
         </Jumbotron>
         <Grid>
