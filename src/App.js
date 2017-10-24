@@ -17,7 +17,15 @@ export default class App extends Component {
   
 
   componentDidMount() {
-    
+    axios.get('https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1')
+    .then(response => {
+      this.setState({
+        flickrs: response.data.items
+      });
+    })
+    .catch(error => {
+      console.log('Error fetching and parsing data', error);
+    });
   }
 
   performSearch = (query) => {
